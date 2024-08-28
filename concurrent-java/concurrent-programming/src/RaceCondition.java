@@ -13,11 +13,18 @@ public class RaceCondition implements Runnable {
      * this info. Problem: two or more threads check condition at the same time
      */
 
-    protected long no= 0;
+    protected static long no= 0;
 
     @Override
     public void run() {
-        this.no += this.no + 5;
+        for(int i= 0; i < 1000; i++) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            no += 5;
+        }
         System.out.println(Thread.currentThread().getName() + " updates value to " + this.no);
     }
 }
